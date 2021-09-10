@@ -23,8 +23,9 @@ async function githubApiGet(url,data){
 	if(!data)data={};
 	console.log(url,data);
 	
+	let res;
 	try{
-		const res  = await axios.get(url,{
+		res  = await axios.get(url,{
 			headers:{
 				"Authorization":'Token '+token,
 				"Accept":"application/vnd.github.v3+json"
@@ -55,6 +56,8 @@ async function getGithubRankByPage(page){
 		page:page
 	})
 
+	if(!searchRes)return [];
+
 	let list = [];
 	let length = searchRes.data.items.length;
 
@@ -63,6 +66,8 @@ async function getGithubRankByPage(page){
 		console.log("getting user "+(i+1)+'/'+length);
 		var userRes = await githubApiGet('https://api.github.com/users/'+oItem.login);
 		
+		if(!userRes)break;
+
 		var item = userRes.data;
 		
 		list.unshift({
