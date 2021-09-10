@@ -27,14 +27,14 @@ jobs:
       # Runs a single command using the runners shell
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.4.0
+        env:  
+          MYTOKEN: ${{ secrets.MYTOKEN }} 
         
       - name: Install NPM dependencies
         run: 
           npm install axios
           
       - name: Run
-        env:  
-          MYTOKEN: ${{ secrets.MYTOKEN }} 
         run:
           node index.js
           
