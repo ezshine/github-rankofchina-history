@@ -3,6 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const token = process.env.MYTOKEN;
+const posturl = process.env.POSTURL;
+
+let total_count = 0;
 
 function delay(ms){
     return new Promise(resolve=>setTimeout(resolve,ms));
@@ -36,7 +39,7 @@ async function githubApiGet(url,data){
 		console.log(err);
 	}
 	
-	await delay(200);
+	await delay(100);
 	
 	return res;
 }
@@ -57,6 +60,8 @@ async function getGithubRankByPage(page){
 	})
 
 	if(!searchRes)return [];
+
+	total_count = searchRes.data.total_count;
 
 	let list = [];
 	let length = searchRes.data.items.length;
@@ -86,7 +91,7 @@ async function getGithubRankByPage(page){
 }
 
 async function getGithubRank(){
-	var total = 20;
+	var total = 10;
 
 	var start = Date.now();
 
@@ -103,6 +108,12 @@ async function getGithubRank(){
 
 	var dirname = "rocdatas/"+dateExtract[0]+"/"+dateExtract[1];
 	mkdirsSync(dirname);
+
+	await axios.post(posturl,{
+		record_date:getTodayFormat(),
+		total_users:total_count,
+		rank_list:allList
+	});
 
 	fs.writeFileSync(dirname+"/"+dateExtract[2]+".json",JSON.stringify(allList));
 }
