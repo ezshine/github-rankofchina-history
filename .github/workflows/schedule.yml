@@ -33,8 +33,10 @@ jobs:
           npm install axios
           
       - name: Run
+        env:  
+          MYTOKEN: ${{ secrets.MYTOKEN }} 
         run:
-          node index.js ${{ secrets.MYTOKEN }}
+          node index.js
           
       - name: Commit
         run:
@@ -44,4 +46,4 @@ jobs:
       - name: Push Changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.MYTOKEN }}
+          github_token: ${{secrets.MYTOKEN}}
