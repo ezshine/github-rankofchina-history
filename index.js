@@ -1,8 +1,23 @@
 const axios = require('axios');
 const fs = require('fs');
+const path = require('path');
+
+const arguments = process.argv.splice(2);
+const token = arguments[0];
 
 function delay(ms){
     return new Promise(resolve=>setTimeout(resolve,ms));
+}
+
+function mkdirsSync(dirname){
+	if(fs.existsSync(dirname)){
+		return true;
+	}else{
+		if(mkdirsSync(path.dirname(dirname))){
+			fs.mkdirSync(dirname);
+			return true;
+		}
+	}
 }
 
 async function githubApiGet(url,data){
@@ -11,7 +26,7 @@ async function githubApiGet(url,data){
 	
 	const res  = await axios.get(url,{
 		headers:{
-			"Authorization":'Token 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',
+			"Authorization":'Token '+token,
 			"Accept":"application/vnd.github.v3+json"
 		},
 		params:data
@@ -26,12 +41,14 @@ function getTodayFormat(){
 	return (new Date().toISOString().slice(0, 10));
 }
 
+const extract = date => date.toISOString().split(/[^0-9]/).slice(0, -1);
+
 async function getGithubRankByPage(page){
 	var searchRes = await githubApiGet('https://api.github.com/search/users',{
 		q:"location:China",
 		sort:"followers",
 		order:"desc",
-		per_page:100,
+		per_page:10,
 		page:page
 	})
 
@@ -74,7 +91,12 @@ async function getGithubRank(){
 
 	console.log(Date.now()-start);
 
-	fs.writeFileSync("github-china-rank-"+getTodayFormat()+".json",JSON.stringify(allList));
+	const dateExtract  = extract(new Date());
+
+	var dirname = "rocdatas/"+dateExtract[0]+"/"+dateExtract[1];
+	mkdirsSync(dirname);
+
+	fs.writeFileSync(dirname+"/"+dateExtract[2]+".json",JSON.stringify(allList));
 }
 
 getGithubRank();
