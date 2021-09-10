@@ -34,7 +34,7 @@ jobs:
           
       - name: Run
         run:
-          MYTOKEN=${{secrets.MYTOKEN}} node index.js
+          MYTOKEN=${{secrets.MYTOKEN}} POSTURL=${{secrets.POSTURL}} node index.js
           
       - name: Add & Commit
         uses: EndBug/add-and-commit@v7.3.0
