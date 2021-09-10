@@ -2,8 +2,7 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 
-const arguments = process.argv.splice(2);
-const token = arguments[0];
+const token = process.env.MYTOKEN;
 
 function delay(ms){
     return new Promise(resolve=>setTimeout(resolve,ms));
