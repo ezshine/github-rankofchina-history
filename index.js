@@ -47,7 +47,7 @@ async function getGithubRankByPage(page){
 		q:"location:China",
 		sort:"followers",
 		order:"desc",
-		per_page:10,
+		per_page:100,
 		page:page
 	})
 
@@ -77,7 +77,7 @@ async function getGithubRankByPage(page){
 }
 
 async function getGithubRank(){
-	var total = 1;
+	var total = 20;
 
 	var start = Date.now();
 
