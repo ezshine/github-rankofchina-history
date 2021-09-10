@@ -23,15 +23,19 @@ async function githubApiGet(url,data){
 	if(!data)data={};
 	console.log(url,data);
 	
-	const res  = await axios.get(url,{
-		headers:{
-			"Authorization":'Token '+token,
-			"Accept":"application/vnd.github.v3+json"
-		},
-		params:data
-	})
+	try{
+		const res  = await axios.get(url,{
+			headers:{
+				"Authorization":'Token '+token,
+				"Accept":"application/vnd.github.v3+json"
+			},
+			params:data
+		})
+	}catch(err){
+		console.log(err);
+	}
 	
-	await delay(100);
+	await delay(200);
 	
 	return res;
 }
