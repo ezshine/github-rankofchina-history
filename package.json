@@ -1,0 +1,22 @@
+{
+  "name": "github-china-rank",
+  "version": "1.0.0",
+  "description": "a github rank for china user",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ezshine/github-china-rank.git"
+  },
+  "author": "ezshine",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ezshine/github-china-rank/issues"
+  },
+  "homepage": "https://github.com/ezshine/github-china-rank#readme",
+  "dependencies": {
+    "axios": "^0.21.4"
+  }
+}
