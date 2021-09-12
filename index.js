@@ -109,7 +109,7 @@ async function getGithubRank(){
 	var dirname = "rocdatas/"+dateExtract[0]+"/"+dateExtract[1];
 	mkdirsSync(dirname);
 
-	await axios.post(posturl,{
+	if(posturl)await axios.post(posturl,{
 		record_date:getTodayFormat(),
 		total_users:total_count,
 		rank_list:allList
