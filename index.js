@@ -77,11 +77,11 @@ async function getGithubRankByPage(page){
 		
 		list.unshift({
 			login:item.login,
-			name:item.name,
+			name:item.name||item.login,
 			location:item.location,
-			company:item.company,
-			blog:item.blog,
-			email:item.email,
+			company:item.company||'',
+			blog:item.blog||'',
+			email:item.email||'',
 			avatar_url:item.avatar_url,
 			followers:item.followers
 		});
